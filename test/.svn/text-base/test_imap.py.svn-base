@@ -1,0 +1,58 @@
+import sys
+sys.path.append("../Mailer")
+from imap import *
+
+
+class TestImap:
+
+    def test_retriever(self):
+        #valid address
+        address = 'pop.gmail.com'
+        username = 'test@gmail.com'
+        password = 'xxxxx'
+
+        the_imap = imap()
+        msg = the_imap.retriever(address, username, password)
+
+        #invalid address
+        address = 'pop.gmail.com'
+        username = 'test@gmail.com'
+        password = 'xxxxx'
+
+        msg = the_imap.retriever(address, username, password)
+
+    def test_get_length(self):
+        address = 'pop.gmail.com'
+        username = 'test@gmail.com'
+        password = 'xxxxx'
+
+        the_imap = imap()
+        msg = the_imap.retriever(address, username, password)
+
+        assert type(the_imap.get_length(msg)) == type(int)
+
+    def test_find(self, **args):
+        address = 'pop.gmail.com'
+        username = 'test@gmail.com'
+        password = 'xxxxx'
+
+        the_imap = imap()
+        msg = the_imap.retriever(address, username, password)
+
+        if args is None:
+            args = {'what': first, 'count': 10}
+            m1 = find(args)
+            assert m1.length == args['count']
+
+            args = {'what': last, 'count': 5}
+            m2 = find(args)
+            assert m2.length == args['count']
+
+            args = {'what': last}
+            m3 = find(args)
+            assert m3.length == args['count']
+        else:
+            assert find(args).length == args['count']
+
+    def test_chinese_encode(self):
+        pass
