@@ -21,6 +21,6 @@ class IMAP(object):
                 self._islogin = True
         except:
             print "login error ,ple check username & password"
-        
+    
    
  
