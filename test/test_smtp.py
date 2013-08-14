@@ -3,17 +3,24 @@ from smtp import SMTP
 
 class TestSMTP:
 
-    def test_initilize(self):
-        c = SMTP(host='YOUR_SERVER', port=587, username='YOUR_USERNAME', password='YOUR_PASSWORD', ssl=True)
+    def __init__(self):
+        self._host = 'YOUR_SERVER'
+        self._port = 'PORT'
+        self._username = 'USERNAME'
+        self._password = 'PASSWORD'
+        self._ssl = True
 
-        tools.eq_(c._host, 'YOUR_SERVER')
-        tools.eq_(c._port, 587)
-        tools.eq_(c._username, 'YOUR_USERNAME')
-        tools.eq_(c._password, 'YOUR_PASSWORD')
-        tools.eq_(c._ssl, True)
+    def test_initilize(self):
+        c = SMTP(host=self._host, port=self._port, username=self._username, password=self._password, ssl=True)
+
+        tools.eq_(c._host, self._host)
+        tools.eq_(c._port, self._port)
+        tools.eq_(c._username, self._username)
+        tools.eq_(c._password, self._password)
+        tools.eq_(c._ssl, self._ssl)
 
     def test_connect(self):
-        c = SMTP(host='YOUR_SERVER')
+        c = SMTP(host=self._host)
         c.connect()
 
         tools.ok_(c._conn != None)
@@ -24,7 +31,7 @@ class TestSMTP:
         tools.eq_(c._conn, old_conn)
 
     def test_re_connect(self):
-        c = SMTP(host='YOUR_SERVER')
+        c = SMTP(host=self._host)
         c.connect()
 
         old_conn = c._conn
@@ -33,7 +40,7 @@ class TestSMTP:
         tools.ok_(old_conn != c._conn)
 
     def test_login(self):
-        c = SMTP(host='YOUR_SERVER', username='YOUR_USERNAME', password='YOUR_PASSWORD')
+        c = SMTP(host=self._host, username=self._username, password=self._password)
         c.connect()
         c.login()
 
@@ -45,7 +52,7 @@ class TestSMTP:
         tools.eq_(c._login, old_login)
 
     def test_re_login(self):
-        c = SMTP(host='YOUR_SERVER', username='YOUR_USERNAME', password='YOUR_PASSWORD')
+        c = SMTP(host=self._host, username=self._username, password=self._password)
         c.connect()
         c.login()
 
@@ -55,7 +62,7 @@ class TestSMTP:
         tools.ok_(c._login, old_login)
 
     def test_is_connected(self):
-        c = SMTP('YOUR_SERVER')
+        c = SMTP(self._host)
         c.connect()
 
         tools.eq_(c.is_conn, True)
